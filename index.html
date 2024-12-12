@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Evaluating Temporal Hallucinations in Multimodal Large Language Models for Video Understanding">
+  <meta name="keywords" content="VidHalluc, Video Hallucination">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> VidHalluc: Evaluating Temporal Hallucinations in Multimodal Large Language Models for Video Understanding</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/leaderboard.css">
+
+  <script type="text/javascript" src="static/js/sort-table.js" defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/explorer-index.js"></script>
+  <script src="./static/js/question_card.js"></script>
+
+  <script src="./static/js/leaderboard_testmini.js"></script>  
+  <script src="./data/results/output_folders.js" defer></script>
+  <script src="./data/results/model_scores.js" defer></script>
+
+  <script src="./visualizer/data/data_public.js" defer></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title is-bold">
+            <span class="sc" style="vertical-align: middle">VidHalluc</span>
+            </h1>
+          <h2 class="subtitle is-3 publication-subtitle">
+            Evaluating Temporal Hallucinations in Multimodal Large Language Models for Video Understanding
+          </h2>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://chaoyuli.com">Chaoyu Li</a><sup style="color:#8C1D40;">1</sup>,</span>
+            <span class="author-block">
+              <a href="https://eunwooim.github.io">Eun Woo Im</a><sup style="color:#8C1D40;">1</sup>,</span>
+            <span class="author-block">
+              <a href="https://pooyanfazli.com">Pooyan Fazli</a><sup style="color:#8C1D40;">1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup style="color:#8C1D40;">1</sup>Arizona State University</span><br>
+            <!-- <span class="paper-block"><b style="color:#f41c1c">ICLR 2024 Oral</b> (85 in 7304, 1.2%)</span> -->
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://www.arxiv.org/pdf/2412.03735"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://www.arxiv.org/abs/2412.03735"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/eunwooim"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/AI4Math/MathVista"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <!-- <i class="far fa-images"></i> -->
+                      <p style="font-size:18px">🤗</p>
+                      <!-- 🔗 -->
+                  </span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+              <!-- Leaderboard Link. -->
+              <span class="link-block">
+                <a href="https://vidhalluc.github.io/#leaderboard"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <p style="font-size:18px">🏆</p>
+                  </span>
+                  <span>Leaderboard</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="margin-top: -150px; margin-bottom: -100px;">
+    <div class="columns is-centered m-6">
+      <div class="column is-full has-text-centered content">
+        <div class="box m-5">
+          <div class="content has-text-centered">
+            <img src="static/images/fig1.png" alt="geometric reasoning" width="80%"/>
+            <p> An example of the video pair in <span class="sc">VidHalluc</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Multimodal large language models (MLLMs) have recently shown significant advancements in video understanding, excelling in content reasoning and instruction-following tasks.
+            However, the problem of hallucination, where models generate inaccurate or misleading content, remains underexplored in the video domain.
+            Building on the observation that the visual encoder of MLLMs often struggles to differentiate between video pairs that are visually distinct but semantically similar, we introduce <b><span class="sc">VidHalluc</span>, the largest benchmark</b> designed to examine hallucinations in MLLMs for video understanding tasks. VidHalluc assesses hallucinations across three critical dimensions: (1) action, (2) temporal sequence, and (3) scene transition.
+            <span class="sc">VidHalluc</span> consists of <b>5,002 videos</b>, paired based on semantic similarity and visual differences, focusing on cases where hallucinations are most likely to occur.
+            Through comprehensive testing, our experiments show that most MLLMs are vulnerable to hallucinations across these dimensions.
+            Furthermore, we propose DINO-HEAL, a training-free method that reduces hallucinations by incorporating spatial saliency information from DINOv2 to reweight visual features during inference.
+            Our results demonstrate that DINO-HEAL consistently improves performance on <span class="sc">VidHalluc</span>, achieving an average improvement of 3.02% in mitigating hallucinations among all tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
+</section>
+            
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">🎯 Motivation</h2>
+        <div class="content has-text-justified">
+          <p>
+            1. Current hallucination benchmarks are typically small in scale, containing fewer than 1K videos and 2K QA pairs.
+            <br>
+            <br>
+            2. The primary focus of the existing benchmarks is on hallucinations in static elements of videos. e.g., objects, their attributes, and spatial relationships.
+            <br>
+            <br>
+            3. The benchmarks are constructed with limited question types. e.g., only binary QA.
+            <br>
+            <br>
+            <br>
+          </p>
+        </div>
+
+        <h2 class="title is-3">💡 <span class="sc">VidHalluc</span> Pipeline</h2>
+        <div class="content has-text-centered">
+          <img src="static/images/fig2.png" alt="pipeline" width="100%"/>
+          <p> Overview of the <span class="sc">VidHalluc</span> benchmark construction process.
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            <span class="sc">VidHalluc</span> is constructed under 4 stages.
+            <br>
+            <br>
+            <strong>1. Semantic and Visual Similarity Filtering</strong>
+            <br>
+            On existing video datasets (e.g., ActivityNet, YouCook2, VALOR32K), semantic similarity through CLIP and evaluate visual similarity using DINOv2. Video pairs are selected based on the criteria of having a semantic similarity score exceeding 0.9 while maintaining a visual similarity score below 0.6.
+            <br>
+            <br>
+            <strong>2. Quality Filtering</strong>
+            <br>
+            Filter out videos if (1) duration is shorter than one second, (2) GPT4 identifies a mismatch between the caption and the depicted actions or scenes.
+            <br>
+            <br>
+            <strong>3. Human Validation</strong>
+            <br>
+            Filter out videos if (1) lack of clear action in either video, (2) presence of multiple actions in either video, (3) identical actions in both videos.
+            <br>
+            <br>
+            <strong>4. Automatic Question Generation</strong>
+            <br>
+            We categorize three distinct hallucination types: (1) Action Hallucination (ACH) (2) Temporal Sequence Hallucination (TSH) (3) Scene Transition Hallucination (STH). We design specific question formats to evaluate model performance: binary QA, multiple-choice questions, sorting questions, open-ended questions.
+            <br>
+            <br>
+            <br>
+          </p>
+        </div>
+
+        <h2 class="title is-3">📊 Statistics</h2>
+        <div class="content has-text-justified">
+          <table class="js-sort-table" id="results">
+            <tr>
+                <td class="js-sort-number"><strong>Statistics</strong></td>
+                <td class="js-sort-number"><strong>ACH</strong></td>
+                <td class="js-sort-number"><strong>TSH</strong></td>
+                <td class="js-sort-number"><strong>STH</strong></td>
+                <td class="js-sort-number"><strong>Total</strong></td>
+            </tr>
+            <tr>
+              <td><b># of Videos</b></td>
+              <td>3957</td>
+              <td>600</td>
+              <td>445</td>
+              <td>5002</td>
+            </tr>
+              <td><b># of Questions</b></td>
+              <td>8250</td>
+              <td>600</td>
+              <td>445</td>
+              <td>9295</td>
+            </tr>
+            <tr>
+              <td><b>Avg. Duration (s)</b></td>
+              <td>21.79</td>
+              <td>41.19</td>
+              <td>28.72</td>
+              <td>24.70</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        </div>
+
+        <h2 class="title is-3">🦖🏥 DINO-HEAL</h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce DINO-HEAL, a training-free method that mitigates hallucinations by using saliency maps from DINOv2 to reweight features from the frozen visual encoder, focusing on key spatial regions.
+            DINO-HEAL requires no architectural modifications or additional training.
+            <br>
+            <br>
+            <div class="content has-text-centered">
+              <img src="static/images/dino-heal.png" alt="pipeline" width="80%"/>
+              <p> DINO-HEAL pipeline. Since DINOv2 effectively captures salient regions in the input video, we leverage it to guide the reweighting of the attention given to different spatial regions within the feature from the visual encoder.
+            </div>
+            <br>
+            This adaptive reweighting strategy enables DINOv2 to enhance key visual features by directly focusing on areas highlighted by the saliency map, thereby mitigating hallucinations while preserving the original feature representation.
+            <br>
+            The visualization of the saliency map corroborates our hypothesis!
+            <br>
+            <br>
+            <br>
+            <div class="content has-text-centered">
+              <img src="static/images/saliencymap.png" alt="pipeline" width="80%"/>
+              <p> The visualization of salieincy maps.
+            </div>
+          </p>
+        </div>
+
+        <section class="section">
+          <div class="container">
+            
+            <div class="columns is-centered">
+              <div class="column is-full has-text-centered content">
+                <h2 class="title is-3" id="leaderboard">🧪 Experimental Results</h2>
+                <div class="content">
+        
+                  <table class="js-sort-table" id="results">
+                    <tr>
+                        <td class="js-sort-number"><strong>Model</strong></td>
+                        <td class="js-sort-number"><strong># Params</strong></td>
+                        <td class="js-sort-number"><strong>Binary QA</strong></td>
+                        <td class="js-sort-number"><strong>MCQ</strong></td>
+                        <td class="js-sort-number"><strong>TSH</strong></td>
+                        <td class="js-sort-number"><strong>STH</strong></td>
+                        <td class="js-sort-number"><strong>Avg.</strong></td>
+                    </tr>
+                    <tr>
+                      <td><b>Human</b></td>
+                      <td>-</td>
+                      <td>95.14</td>
+                      <td>93.29</td>
+                      <td>90.17</td>
+                      <td>87.43</td>
+                      <td>91.51</td>
+                    </tr>
+                      <td><b>GPT-4o</b></td>
+                      <td>-</td>
+                      <td>81.17</td>
+                      <td>90.97</td>
+                      <td>83.42</td>
+                      <td>74.17</td>
+                      <td>82.43</td>                                
+                    </tr>
+                    <tr>
+                      <td><b>Gemini-1.5-Pro</b></td>
+                      <td>-</td>
+                      <td>75.02</td>
+                      <td>79.04</td>
+                      <td>82.67</td>
+                      <td>64.11</td>
+                      <td>75.21</td>
+                    </tr>
+                    <tr>
+                      <td><b>VILA 1.5</b></td>
+                      <td>13B</td>
+                      <td>57.75</td>
+                      <td>81.95</td>
+                      <td>68.84</td>
+                      <td>35.04</td>
+                      <td>60.90</td>
+                    </tr>
+                    <tr>
+                      <td><b>VidelLLaMA2</b></td>
+                      <td>7B</td>
+                      <td>48.23</td>
+                      <td>83.79</td>
+                      <td>22.50</td>
+                      <td>65.22</td>
+                      <td>54.94</td>
+                    </tr>
+                    <tr>
+                      <td><b>LLaVA-NeXT-Video</b></td>
+                      <td>34B</td>
+                      <td>26.04</td>
+                      <td>77.57</td>
+                      <td>20.67</td>
+                      <td>44.39</td>
+                      <td>42.17</td>
+                    </tr>
+                    <tr>
+                      <td><b>PLLaVA</b></td>
+                      <td>13B</td>
+                      <td>35.04</td>
+                      <td>77.31</td>
+                      <td>17.83</td>
+                      <td>32.94</td>
+                      <td>40.78</td>
+                    </tr>
+                    <tr>
+                      <td><b>Video-LLaVA</b></td>
+                      <td>7B</td>
+                      <td>23.88</td>
+                      <td>65.18</td>
+                      <td>28.83</td>
+                      <td>30.12</td>
+                      <td>37.00</td>
+                    </tr>
+                    <tr>
+                      <td><b>Chat-UniVi</b></td>
+                      <td>13B</td>
+                      <td>23.20</td>
+                      <td>55.07</td>
+                      <td>32.50</td>
+                      <td>31.55</td>
+                      <td>35.58</td>
+                    </tr>
+                    <tr>
+                      <td><b>SharGPT4Video</b></td>
+                      <td>8B</td>
+                      <td>29.58</td>
+                      <td>44.83</td>
+                      <td>49.00</td>
+                      <td>17.08</td>
+                      <td>35.12</td>
+                    </tr>
+                    <tr>
+                      <td><b>Video-ChatGPT</b></td>
+                      <td>7B</td>
+                      <td>9.36</td>
+                      <td>23.25</td>
+                      <td>29.83</td>
+                      <td>8.13</td>
+                      <td>17.64</td>
+                    </tr>
+                </table>
+        
+                  <b>Hallucination types</b> 
+                  <br>
+                  <b>Binary QA:</b> binary question and answer,
+                  <b>MCQ:</b> multiple choice question,
+                  <br>
+                  <b>TSH:</b> temporal sequence hallucination,
+                  <b>STH:</b> scene transition hallucination.
+                  <br>
+                  <br>
+                  <div>
+                  </div>
+                </div>
+
+                <div class="content has-text-centered">
+                  <img src="static/images/radar.png" alt="pipeline" width="80%"/>
+                  <p> State-of-the-art MLLMs on <span class="sc">VidHalluc</span> </p>
+                </div>
+        
+                <h2 class="title is-3">👀 Qualitative Results</h2>
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="box m-5">
+                    <div class="content has-text-centered">
+                      <img src="static/images/achexample.png" alt="grade-lv" width="100%"/>
+                      <p>Action hallucination example of <span class="sc">VidHalluc</span>.</p>
+                    </div>
+                  </div>
+                  <div class="box m-5">
+                    <div class="content has-text-centered">
+                      <img src="static/images/tshexample.png" alt="grade-lv" width="100%"/>
+                      <p>
+                        Temporal sequence hallucination of <span class="sc">VidHalluc</span>.</p>
+                    </div>
+                  </div>
+                  <div class="box m-5">
+                    <div class="content has-text-centered">
+                      <img src="static/images/sthexample.png" alt="grade-lv" width="100%"/>
+                      <p>Scene transition hallucination of <span class="sc">VidHalluc</span>.</p>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+<style>
+  pre {
+    text-align: left;
+    white-space: pre-line;
+  }
+  </style>
+<!-- @TODO: bibtex -->
+<section class="section" id="BibTeX">
+  <div text-align="left" class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">BibTeX</h2>
+    <pre><code>
+@inproceedings{li2024vidhalluc,
+author    = {Li, Chaoyu and Im, Eun Woo and Fazli, Pooyan},
+title     = {Vidhalluc: evaluating temporal hallucination in multimodal large language models for video understanding},
+booktitle={arXiv:0000.0000},
+year      = {2024}
+}
+</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <!-- <div class="container"> -->
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is website adapted from <a href="https://nerfies.github.io/">Nerfies</a>, licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+</footer>
+
+</body>
+</html>
